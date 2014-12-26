@@ -26,7 +26,7 @@ prc() {
   HIT="$URL$OP.sh"
   HIT_RAW="$RAW_URL$OP.sh"
 
-  echo "run $OP..."
+  echo "running '$OP' script..."
   START=$(date +%s)
 
   if has "curl"; then
