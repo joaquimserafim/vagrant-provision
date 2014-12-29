@@ -37,7 +37,7 @@ prc() {
 
   END=$(date +%s)
   DIFF=$(( $END - $START ))
-  echo "it took $DIFF seconds."
+  echo "'$OP' it took $DIFF seconds."
 }
 
 main() {
