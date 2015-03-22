@@ -1,12 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # URL's
 URL="https://github.com/joaquimserafim/vagrant-provision-scripts/blob/master/scripts/"
 RAW_URL="https://raw.githubusercontent.com/joaquimserafim/vagrant-provision-scripts/master/scripts/"
-
-has() {
-  type "$1" > /dev/null 2>&1
-}
 
 use_curl() {
   if curl --output /dev/null --silent --head --fail "$HIT"; then
@@ -16,9 +12,16 @@ use_curl() {
   fi
 }
 
-use_wget() {
-  echo "'wget' not implemented yet!" >&2
-  exit 1
+install_curl() {
+  echo "installing curl..."
+  apt-get update > /dev/null 2>&1
+  apt-get install -y curl > /dev/null 2>&1
+}
+
+check_curl_exist() {
+  if ! CURL="$(type -ap "curl")" || [ -z "$CURL" ];
+    install_curl
+  fi
 }
 
 prc() {
@@ -28,19 +31,14 @@ prc() {
 
   echo "running '$OP' script..."
   START=$(date +%s)
-
-  if has "curl"; then
-    use_curl $OP $HIT $HIT_RAW
-  elif has "wget"; then
-    use_wget $OP $HIT $HIT_RAW
-  fi
-
+  use_curl $OP $HIT $HIT_RAW
   END=$(date +%s)
   DIFF=$(( $END - $START ))
   echo "'$OP' it took $DIFF seconds."
 }
 
 main() {
+  check_curl_exist
   echo "processing provision..."
   for op in $OPS; do
     prc $op
