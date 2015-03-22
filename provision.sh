@@ -12,15 +12,11 @@ use_curl() {
   fi
 }
 
-install_curl() {
-  echo "installing curl..."
-  apt-get update > /dev/null 2>&1
-  apt-get install -y curl > /dev/null 2>&1
-}
-
 check_curl_exist() {
-  if ! CURL="$(type -ap "curl")" || [ -z "$CURL" ];
-    install_curl
+  if ! CURL="$(type -ap "curl")" || [ -z "$CURL" ]; then
+    echo "installing curl..."
+    apt-get update > /dev/null 2>&1
+    apt-get install -y curl > /dev/null 2>&1
   fi
 }
 
