@@ -1,19 +1,19 @@
-#vagrant-provision
+# vagrant-provision
 
 **V1.0.0**
 
-you can use `npm` to run the test
 
-#####Testing:
-    npm test            // launch vagrant and start the provision
-    npm run destroy     // the same as "vagrant destroy"
-    npm run halt        // the same as "vagrant halt"
-    npm run provision   // the same as "vagrant provision"
-    npm run ssh         // the same as "vagrant ssh"
+#### Testing:
+```
+make test           // launch vagrant and to test
+make halt           // the same as "vagrant halt"
+make up             // the same as "vagrant up"
+make ssh            // the same as "vagrant ssh"
+make clean          // destroy vm and rm test folder
+```
 
-
-#####Example:
-    git clone git@github.com:joaquimserafim/vagrantfile-template.git ´name_my_vm´
+#### Example:
+`git clone git@github.com:joaquimserafim/vagrantfile-template.git ´name_my_vm´`
 
 edit the Vangrantfile and make the changes you want for example:
 
