@@ -4,7 +4,7 @@
 URL="https://github.com/joaquimserafim/vagrant-provision-scripts/blob/master/scripts/"
 RAW_URL="https://raw.githubusercontent.com/joaquimserafim/vagrant-provision-scripts/master/scripts/"
 
-use_curl() {
+download() {
   if curl --output /dev/null --silent --head --fail "$HIT"; then
     curl -s "$HIT_RAW" | bash
   else
@@ -27,7 +27,7 @@ prc() {
 
   echo "running '$OP' script..."
   START=$(date +%s)
-  use_curl $OP $HIT $HIT_RAW
+  download $OP $HIT $HIT_RAW
   END=$(date +%s)
   DIFF=$(( $END - $START ))
   echo "'$OP' it took $DIFF seconds."
