@@ -12,7 +12,7 @@ test:
 	@rm -rf test
 	@git clone git@github.com:joaquimserafim/vagrantfile-template.git test
 	@sed -i 's/https:\/\/raw.githubusercontent.com\/joaquimserafim\/vagrant-provision\/master\/provision.sh/..\/provision.sh/' test/Vagrantfile
-	@cd test ; vagrant up
+	@cd test ; PENV=test vagrant up
 
 clean:
 	@echo "running clean..."

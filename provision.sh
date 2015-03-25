@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
+USE_LOCAL_SCRIPTS=false
+
 # URL's
-URL="https://github.com/joaquimserafim/vagrant-provision-scripts/blob/master/scripts/"
-RAW_URL="https://raw.githubusercontent.com/joaquimserafim/vagrant-provision-scripts/master/scripts/"
+URL="https://github.com/joaquimserafim/vagrant-provision-scripts/\
+blob/master/scripts/"
+RAW_URL="https://raw.githubusercontent.com/joaquimserafim/\
+vagrant-provision-scripts/master/scripts/"
 
 download() {
   if curl --output /dev/null --silent --head --fail "$HIT"; then
@@ -22,24 +26,32 @@ check_curl_exist() {
 
 prc() {
   OP=$1
-  HIT="$URL$OP.sh"
-  HIT_RAW="$RAW_URL$OP.sh"
-
   echo "running '$OP' script..."
   START=$(date +%s)
-  download $OP $HIT $HIT_RAW
+
+  if [ -d "$USE_LOCAL_SCRIPTS" ]; then
+    bash "$USE_LOCAL_SCRIPTS/$OP.sh"
+  else
+    HIT="$URL$OP.sh"
+    HIT_RAW="$RAW_URL$OP.sh"
+    download $OP $HIT $HIT_RAW
+  fi
+
   END=$(date +%s)
   DIFF=$(( $END - $START ))
   echo "'$OP' it took $DIFF seconds."
 }
 
 main() {
-  check_curl_exist
   echo "processing provision..."
-  for op in $OPS; do
+  if [ "$#" -ne 1 ]; then
+    echo "will run the following script(s): '"${@:2}"'"
+  fi
+  USE_LOCAL_SCRIPTS=$1
+  check_curl_exist
+  for op in "${@:2}"; do
     prc $op
   done
 }
 
-OPS=$@
-main $OPS
+main $@
