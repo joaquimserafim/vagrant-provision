@@ -1,18 +1,19 @@
 
 cmd ?= "halt"
 
+.PHONY: name version test clean run
+
 name:
 	@echo "vagrant-scripts"
 
 version:
-	@echo "v1.0.0"
+	@echo "v1.1.0"
 
 test:
 	@echo "running test..."
 	@rm -rf test
 	@git clone git@github.com:joaquimserafim/vagrantfile-template.git test
-	@sed -i 's/https:\/\/raw.githubusercontent.com\/joaquimserafim\/vagrant-provision\/master\/provision.sh/..\/provision.sh/' test/Vagrantfile
-	@cd test ; PENV=test vagrant up
+	@cd test ; SKIP_UPDATE=true SCRIPTS=../../vagrant-scripts/scripts PROVISION_SCRIPT=../provision.sh PROVISION=" silversearcher_ag" vagrant up
 
 clean:
 	@echo "running clean..."
@@ -21,5 +22,3 @@ clean:
 run:
 	@echo "running vagrant $(cmd)..."
 	@cd test ; vagrant $(cmd)
-
-.PHONY: name version test clean run

@@ -25,9 +25,9 @@ check_curl_exist() {
 }
 
 prc() {
-  OP=$1
+  local OP=${1// }
   echo "running '$OP' script..."
-  START=$(date +%s)
+  local START=$(date +%s)
 
   if [ -d "$USE_LOCAL_SCRIPTS" ]; then
     bash "$USE_LOCAL_SCRIPTS/$OP.sh"
@@ -37,8 +37,8 @@ prc() {
     download $OP $HIT $HIT_RAW
   fi
 
-  END=$(date +%s)
-  DIFF=$(( $END - $START ))
+  local END=$(date +%s)
+  DIFF=$(($END - $START))
   echo "'$OP' it took $DIFF seconds."
 }
 
